@@ -1,6 +1,6 @@
 # Finance
 
-A simple command line tool to view and edit financial investment portfolios
+A simple command line tool for managing private financial investment portfolios
 
 Install requirements:
 

@@ -5,6 +5,7 @@ import getopt
 import pandas as pd
 from pandas_datareader.data import get_quote_yahoo
 from termcolor import colored
+import reports
 
 if len(sys.argv) == 1:
     print("No args given, using example data...")
@@ -34,16 +35,15 @@ def getQuotes():
     data["Balance"] = balances
 
 
-def calculateTotalBalance():
+def getTotalBalance():
     totalBalance = 0.0
     for i in range(0, len(data)):
         totalBalance += data["Balance"][i]
     return totalBalance
 
 
-def analyzeAC():
-    stocks, bonds, commodities, gold, crypto, p2p, cash = 0,0,0,0,0,0,0
-
+def getAssetAllocation():
+    stocks, bonds, commodities, gold, crypto, p2p, cash = 0, 0, 0, 0, 0, 0, 0
     for i in range(0, len(data)):
         ac = data["AC"][i]
 
@@ -61,8 +61,12 @@ def analyzeAC():
             p2p += data["Balance"][i]
         elif ac == "CASH":
             cash += data["Balance"][i]
+    return stocks, bonds, commodities, gold, crypto, p2p, cash
 
-    totalBalance = calculateTotalBalance()
+
+def analyzeAC():
+    stocks, bonds, commodities, gold, crypto, p2p, cash = getAssetAllocation()
+    totalBalance = getTotalBalance()
 
     pctStocks = stocks/totalBalance * 100
     pctBonds = bonds/totalBalance * 100
@@ -74,26 +78,30 @@ def analyzeAC():
 
     cryptoStr = ""
     if pctCrypto < 1 or pctCrypto > 10:
-        cryptoStr = colored(str(round(pctCrypto, 2))+"%", "red") + " (optimal: 1% - 10%)"
-    else: 
+        cryptoStr = colored(str(round(pctCrypto, 2))+"%",
+                            "red") + " (optimal: 1% - 10%)"
+    else:
         cryptoStr = str(round(pctCrypto, 2))+"%"
 
     commoditiesStr = ""
     if pctCommodities > 7.5:
-        commoditiesStr = colored(str(round(pctCommodities, 2))+"%", "red") + " (optimal: 0% - 7.5%)"
-    else: 
+        commoditiesStr = colored(
+            str(round(pctCommodities, 2))+"%", "red") + " (optimal: 0% - 7.5%)"
+    else:
         commoditiesStr = str(round(pctCommodities, 2))+"%"
-    
+
     goldStr = ""
     if pctGold < 5 or pctGold > 10:
-        goldStr = colored(str(round(pctGold, 2))+"%", "red") + " (optimal: 5% - 10%)"
-    else: 
+        goldStr = colored(str(round(pctGold, 2))+"%",
+                          "red") + " (optimal: 5% - 10%)"
+    else:
         goldStr = str(round(pctGold, 2))+"%"
 
     p2pStr = ""
     if pctP2P > 10:
-        p2pStr = colored(str(round(pctP2P, 2))+"%", "red") + " (optimal: 0% - 10%)"
-    else: 
+        p2pStr = colored(str(round(pctP2P, 2))+"%", "red") + \
+            " (optimal: 0% - 10%)"
+    else:
         p2pStr = str(round(pctP2P, 2))+"%"
 
     print("Percentage of stocks: " + str(round(pctStocks, 2))+"%")
@@ -106,8 +114,8 @@ def analyzeAC():
     print("----------------------------------------------------------------")
     print("Prepared for market situations:")
     print("Normal: " + str(round(pctStocks, 2)))
-    print("Inflation: "+ str(round(pctCommodities + pctGold + pctCrypto, 2)))
-    print("Deflation: "+ str(round(pctBonds + pctCash + pctP2P, 2)))
+    print("Inflation: " + str(round(pctCommodities + pctGold + pctCrypto, 2)))
+    print("Deflation: " + str(round(pctBonds + pctCash + pctP2P, 2)))
 
     print("================================================================")
 
@@ -118,7 +126,7 @@ def main():
 
     while cmd != "q":
         cmd = input(
-            'Hello Sir, what do you want to do? (a)nalyze, (b)alance, (q)uit: ')
+            'Hello Sir, what do you want to do? (a)nalyze, (b)alance, (r)eport, (q)uit: ')
         print("================================================================")
 
         if cmd == "a":
@@ -126,8 +134,11 @@ def main():
         elif cmd == "b":
             print(data)
             print("Your total balance is: " +
-                  str(round(calculateTotalBalance(), 2))+"€")
+                  str(round(getTotalBalance(), 2))+"€")
             print("================================================================")
+        elif cmd == "r":
+            reports.pieChartReport(getAssetAllocation(), getTotalBalance())
+
 
 if __name__ == "__main__":
     main()
