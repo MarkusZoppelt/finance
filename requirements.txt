@@ -1,4 +1,4 @@
 numpy==1.19.1
 pandas==1.0.5
-pandas-datareader==0.10.0.dev0
+pandas-datareader==0.9.0
 termcolor==1.1.0
