@@ -122,11 +122,24 @@ def analyzeAC():
 
 def main():
     getQuotes()
+
+    cmdOptions = [
+        '\033[1m' + '(a)'+'\033[0m'+'nalyze',    # analyze portfolio (e.g. for market conditions)
+        '\033[1m' + '(b)'+'\033[0m'+'alance',    # show balance
+        '\033[1m' + '(r)'+'\033[0m'+'eports',    # show reports
+        '\033[1m' + '(q)'+'\033[0m'+'uit'        # quit
+    ]
+
+    greetingText = '\033[1m' + "🎩 Hello Sir, what do you want to do?" + '\033[0m' + " (Choose option and hit Enter)\n"
+    for co in cmdOptions:
+           greetingText += "  " + co+"\n"
+    greetingText += ">"
+
     cmd = ""
 
     while cmd != "q":
-        cmd = input(
-            'Hello Sir, what do you want to do? (a)nalyze, (b)alance, (r)eport, (q)uit: ')
+        cmd = input(greetingText)
+
         print("================================================================")
 
         if cmd == "a":
