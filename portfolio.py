@@ -144,7 +144,7 @@ def main():
         '\033[1m' + '(q)'+'\033[0m'+'uit'        # quit
     ]
 
-    greetingText = '\033[1m' + "🎩 Hello Sir, what do you want to do?" + '\033[0m' + " (Choose option and hit Enter)\n"
+    greetingText = '\033[1m' + "Hello Sir, what do you want to do?" + '\033[0m' + " (Choose option and hit Enter)\n"
     for co in cmdOptions:
            greetingText += "  " + co+"\n"
     greetingText += ">"
@@ -161,7 +161,7 @@ def main():
         elif cmd == "b":
             print(data)
             print("Your total balance is: " +
-                  str(round(getTotalBalance(), 2))+"€")
+                  str(round(getTotalBalance(), 2))+"EUR")
             print("================================================================")
         elif cmd == "r":
             reports.pieChartReport(getAssetAllocation())
