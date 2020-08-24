@@ -63,6 +63,20 @@ def getAssetAllocation():
             cash += data["Balance"][i]
     return stocks, bonds, commodities, gold, crypto, p2p, cash
 
+def getCryptoAllocation():
+    bitcoin, ether, monero = 0,0,0
+
+    for i in range(0, len(data)):
+        ticker = data["Ticker"][i]
+        
+        if ticker == "BTC-EUR":
+            bitcoin += data["Balance"][i]
+        elif ticker == "ETH-EUR":
+            ether += data["Balance"][i]
+        elif ticker == "XMR-EUR":
+            monero += data["Balance"][i]
+    return bitcoin, ether, monero
+
 
 def analyzeAC():
     stocks, bonds, commodities, gold, crypto, p2p, cash = getAssetAllocation()
@@ -150,7 +164,9 @@ def main():
                   str(round(getTotalBalance(), 2))+"€")
             print("================================================================")
         elif cmd == "r":
-            reports.pieChartReport(getAssetAllocation(), getTotalBalance())
+            reports.pieChartReport(getAssetAllocation())
+        elif cmd == "cr":
+            reports.cryptoReport(getCryptoAllocation())
 
 
 if __name__ == "__main__":
