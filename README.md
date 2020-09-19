@@ -48,3 +48,13 @@ Deflation: 33.03
 ================================================================
 
 ```
+
+Bonus: GPG Encryption
+
+This tool supports (gpg) encrypted csv files for secure sync between platforms via, e.g., git.
+Decrypted values are never written to disk.
+
+    # you will need a valid gpg key in ~/.gnupg/
+    ./portfolio.py data.gpg
+
+Pro Tip: Use a plugin like [vim-gnupg](https://github.com/jamessan/vim-gnupg) for editing your data file.
