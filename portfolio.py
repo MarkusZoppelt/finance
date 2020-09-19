@@ -5,13 +5,21 @@ import getopt
 import pandas as pd
 from pandas_datareader.data import get_quote_yahoo
 from termcolor import colored
+
 import reports
 
 if len(sys.argv) == 1:
     print("No args given, using example data...")
     data = pd.read_csv("example_data.csv")
 else:
-    data = pd.read_csv(sys.argv[1])
+    if sys.argv[1].endswith(".csv"):
+        data = pd.read_csv(sys.argv[1])
+    elif sys.argv[1].endswith(".gpg"):
+        from encryption import getDataFromEncryptedFile as GDFEF
+        decryptedData = GDFEF(sys.argv[1])
+        data = pd.read_csv(decryptedData)
+    else:
+        print("Invalid filetype")
 
 
 def getQuotes():
@@ -33,7 +41,6 @@ def getQuotes():
             except Exception:
                 print("No quote for this ticker")
     data["Balance"] = balances
-
 
 def getTotalBalance():
     totalBalance = 0.0
