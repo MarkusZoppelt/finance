@@ -9,7 +9,7 @@ from termcolor import colored
 import reports
 
 if len(sys.argv) == 1:
-    print("No args given, using example data...")
+#    print("No args given, using example data...")
     data = pd.read_csv("example_data.csv")
 else:
     if sys.argv[1].endswith(".csv"):
@@ -22,7 +22,7 @@ else:
         print("Invalid filetype")
 
 
-def getQuotes():
+def getQuotes(data):
     tickers = data["Ticker"]
 
     print("Getting current prices from Yahoo Finance...")
@@ -41,6 +41,28 @@ def getQuotes():
             except Exception:
                 print("No quote for this ticker")
     data["Balance"] = balances
+    return data
+
+# TODO
+def getPerformance():
+    tickers = data["Ticker"]
+
+    startBalances = []
+
+    for i in range(0, len(tickers)):
+        ac = data["AC"][i]
+        # If Asset Class is cash, then get amount only
+        if ac == "CASH" or ac == "P2P":
+            startBalances.append(data["Amount"][i])
+        else:
+            try:
+                startPrice = get_quote_yahoo(tickers[i])["price"][0]
+                amount = data["Amount"][i]
+                startBalances.append(round(startPrice*amount, 2))
+            except Exception:
+                print("No quote for this ticker")
+    data["1.1"] = startBalances
+
 
 def getTotalBalance():
     totalBalance = 0.0
@@ -50,6 +72,7 @@ def getTotalBalance():
 
 
 def getAssetAllocation():
+    labels = "Stocks", "Bonds", "Commodities", "Gold", "Crypto", "P2P", "Cash"
     stocks, bonds, commodities, gold, crypto, p2p, cash = 0, 0, 0, 0, 0, 0, 0
     for i in range(0, len(data)):
         ac = data["AC"][i]
@@ -68,25 +91,19 @@ def getAssetAllocation():
             p2p += data["Balance"][i]
         elif ac == "CASH":
             cash += data["Balance"][i]
-    return stocks, bonds, commodities, gold, crypto, p2p, cash
+    return labels, (stocks, bonds, commodities, gold, crypto, p2p, cash)
 
-def getCryptoAllocation():
-    bitcoin, ether, monero = 0,0,0
-
-    for i in range(0, len(data)):
-        ticker = data["Ticker"][i]
-        
-        if ticker == "BTC-EUR":
-            bitcoin += data["Balance"][i]
-        elif ticker == "ETH-EUR":
-            ether += data["Balance"][i]
-        elif ticker == "XMR-EUR":
-            monero += data["Balance"][i]
-    return bitcoin, ether, monero
-
+def getAllocationForClass(c):
+    cdata = data.loc[data['AC'] == c]
+    labels = []
+    ticker_balances = []
+    for i in range(0, len(cdata)):
+        labels.append(cdata["Name"].iloc[i])
+        ticker_balances.append(cdata["Balance"].iloc[i])
+    return labels, ticker_balances
 
 def analyzeAC():
-    stocks, bonds, commodities, gold, crypto, p2p, cash = getAssetAllocation()
+    stocks, bonds, commodities, gold, crypto, p2p, cash = getAssetAllocation()[1]
     totalBalance = getTotalBalance()
 
     pctStocks = stocks/totalBalance * 100
@@ -140,9 +157,13 @@ def analyzeAC():
 
     print("================================================================")
 
+def getDataFrame(filename):
+    data = pd.read_csv(filename)
+    df = getQuotes(data)
+    return df
 
 def main():
-    getQuotes()
+    getQuotes(data)
 
     cmdOptions = [
         '\033[1m' + '(a)'+'\033[0m'+'nalyze',    # analyze portfolio (e.g. for market conditions)
@@ -171,9 +192,7 @@ def main():
                   str(round(getTotalBalance(), 2))+"EUR")
             print("================================================================")
         elif cmd == "r":
-            reports.pieChartReport(getAssetAllocation())
-        elif cmd == "cr":
-            reports.cryptoReport(getCryptoAllocation())
+            reports.plotReports(getAssetAllocation(), getAllocationForClass("S"), getAllocationForClass("CRYPTO"))
 
 
 if __name__ == "__main__":

@@ -2,25 +2,23 @@ from matplotlib import pyplot as plt
 import pandas as pd
 
 
-def pieChartReport(assetAllocation):
-    fig = plt.figure()
-    ax = fig.add_axes([0, 0, 1, 1])
-    ax.axis('equal')
+def plotReports(assets, stocks, crypto):
+	f1 = plt.figure(1)
+	ax1 = f1.add_axes([0, 0, 1, 1])
+	ax1.axis('equal')
+	
+	ax1.pie(assets[1], labels=assets[0], autopct='%1.2f%%')
 
-    assets = ['Stocks', 'Bonds', 'Commodities',
-              'Gold', 'Crypto', 'P2P', 'Cash']
-    balances = assetAllocation
 
-    ax.pie(balances, labels=assets, autopct='%1.2f%%')
-    plt.show()
+	f2 = plt.figure(2)
+	ax2 = f2.add_axes([0, 0, 1, 1])
+	ax2.axis('equal')
+	ax2.pie(stocks[1], labels=stocks[0], autopct='%1.2f%%')
 
-def cryptoReport(cryptoAllocation):
-    fig = plt.figure()
-    ax = fig.add_axes([0, 0, 1, 1])
-    ax.axis('equal')
 
-    assets = ['Bitcoin', 'Ether', 'Monero']
-    balances = cryptoAllocation
+	f3 = plt.figure(3)
+	ax3 = f3.add_axes([0, 0, 1, 1])
+	ax3.axis('equal')
+	ax3.pie(crypto[1], labels=crypto[0], autopct='%1.2f%%')
 
-    ax.pie(balances, labels=assets, autopct='%1.2f%%')
-    plt.show()
+	plt.show()
