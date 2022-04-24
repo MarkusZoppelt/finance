@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import sys
-import getopt
 import pandas as pd
 from pandas_datareader.data import get_quote_yahoo
 from termcolor import colored
@@ -9,7 +8,7 @@ from termcolor import colored
 import reports
 
 if len(sys.argv) == 1:
-#    print("No args given, using example data...")
+    print("No args given, using example data...")
     data = pd.read_csv("example_data.csv")
 else:
     if sys.argv[1].endswith(".csv"):

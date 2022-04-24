@@ -1,7 +1,10 @@
 .vscode
-data/
-
 __pycache__/
 build/
+data/
 dist/
 *.spec
+.env/
+
+# encrypted files:
+*.gpg
