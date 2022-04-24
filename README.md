@@ -1,6 +1,6 @@
 # Finance
 
-A simple command line tool for managing private financial investment portfolios
+A simple command line tool for managing personal financial investment portfolios
 
 Install requirements:
 
@@ -21,9 +21,9 @@ Check your portfolio balance:
 1  US Treasury 20+yr      TLT       B    4.00   479.96
 2        Commodities      GSG       C    3.00    70.05
 3               Gold      GLD       G    1.00   180.29
-4            Bitcoin  BTC-USD  CRYPTO    0.01   396.67
+4            Bitcoin  BTC-USD  CRYPTO    0.01   396.30
 5               Cash        -    CASH  200.00   200.00
-Your total balance is: 2179.05EUR
+Your total balance is: 2178.68EUR
 ================================================================
 ```
 
@@ -31,18 +31,12 @@ Analyze your portfolio:
 
 ```
 ================================================================
-Percentage of stocks: 39.1%
+Percentage of stocks: 39.11%
 Percentage of bonds: 22.03%
-Percentage of commodities: 3.21%
-Percentage of gold: 8.27%
-Percentage of crypto: 18.2% (optimal: 1% - 10%)
-Percentage of P2P: 0.0%
+Percentage of commodities: 3.22%
+Percentage of gold: 8.28%
+Percentage of crypto: 18.19%
 Percentage of cash: 9.18%
-----------------------------------------------------------------
-Prepared for market situations:
-Normal: 39.1
-Inflation: 29.69
-Deflation: 31.2
 ================================================================
 ```
 
