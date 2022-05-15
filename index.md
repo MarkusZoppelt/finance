@@ -1,4 +1,7 @@
-A simple command line tool for managing personal financial investment portfolios
+Clone from GitHub:
+
+    git clone https://github.com/MarkusZoppelt/finance.git
+    cd finance
 
 Install requirements:
 
