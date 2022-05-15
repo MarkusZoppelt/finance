@@ -1,37 +1,49 @@
-## Welcome to GitHub Pages
+A simple command line tool for managing personal financial investment portfolios
 
-You can use the [editor on GitHub](https://github.com/MarkusZoppelt/finance/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+Install requirements:
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+    pip install -r requirements.txt
 
-### Markdown
+Usage:
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+    ./portfolio.py <data.csv>
 
-```markdown
-Syntax highlighted code block
+Example data can be found in [`example_data.csv`](/example_data.csv)
 
-# Header 1
-## Header 2
-### Header 3
+Check your portfolio balance:
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```
+================================================================
+                Name   Ticker      AC  Amount  Balance
+0            S&P 500      SPY       S    2.00   852.08
+1  US Treasury 20+yr      TLT       B    4.00   479.96
+2        Commodities      GSG       C    3.00    70.05
+3               Gold      GLD       G    1.00   180.29
+4            Bitcoin  BTC-USD  CRYPTO    0.01   396.30
+5               Cash        -    CASH  200.00   200.00
+Your total balance is: 2178.68EUR
+================================================================
 ```
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+Analyze your portfolio:
 
-### Jekyll Themes
+```
+================================================================
+Percentage of stocks: 39.11%
+Percentage of bonds: 22.03%
+Percentage of commodities: 3.22%
+Percentage of gold: 8.28%
+Percentage of crypto: 18.19%
+Percentage of cash: 9.18%
+================================================================
+```
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/MarkusZoppelt/finance/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+Bonus: GPG Encryption
 
-### Support or Contact
+This tool supports (gpg) encrypted csv files for secure sync between platforms via, e.g., git.
+Decrypted values are never written to disk.
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+    # you will need a valid gpg key in ~/.gnupg/
+    ./portfolio.py data.gpg
+
+Pro Tip: Use a plugin like [vim-gnupg](https://github.com/jamessan/vim-gnupg) for editing your data file.
