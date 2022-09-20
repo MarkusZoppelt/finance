@@ -1,5 +1,12 @@
 # Finance
 
+## Info
+
+### This project will not be further maintained or developed. Please check out the modern successor: [portfolio_rs](https://github.com/MarkusZoppelt/portfolio_rs)
+
+
+## About
+
 A simple command line tool for managing personal financial investment portfolios
 
 Install requirements:
